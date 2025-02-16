@@ -32,20 +32,20 @@ export default function AFisico() {
 
       // Obtener el perfil fitness del usuario
       const perfilResponse = await axios.get(
-        `http://192.168.1.11:8080/perfil-fitness?userId=${userId}`,
+        `http://192.168.1.14:8080/perfil-fitness?userId=${userId}`,
       );
       setPerfilFitness(perfilResponse.data);
 
       if (perfilResponse.data) {
         // Obtener la última evaluación del perfil fitness
         const evaluacionResponse = await axios.get(
-          `http://192.168.1.11:8080/ultima-evaluacion?perfilFitnessId=${perfilResponse.data.id}`,
+          `http://192.168.1.14:8080/ultima-evaluacion?perfilFitnessId=${perfilResponse.data.id}`,
         );
         setEvaluacion(evaluacionResponse.data);
 
         // Obtener las rutinas del perfil fitness
         const rutinasResponse = await axios.get(
-          `http://192.168.1.11:8080/rutinas?perfilFitnessId=${perfilResponse.data.id}`,
+          `http://192.168.1.14:8080/rutinas?perfilFitnessId=${perfilResponse.data.id}`,
         );
         console.log("Rutinas en la respuesta :", rutinasResponse.data);
         setRutinas(rutinasResponse.data);

@@ -8,6 +8,7 @@ import {
   getProfileFitnessByUserId,
   getLastFitnessEvaluation,
   getRoutinesByProfileId,
+  updateUserToken,
 } from "./database.js";
 import { generateToken, verifyToken } from "./auth.js";
 import express from "express";
@@ -23,7 +24,7 @@ const app = express();
 const expo = new Expo();
 
 const corsOptions = {
-  origin: "http://192.168.1.11:8081",
+  origin: "http://192.168.1.14:8081",
   methods: ["POST", "GET"],
   credentials: true,
 };
@@ -202,6 +203,24 @@ app.put("/updatenotification/:id", async (req, res) => {
   } catch (error) {
     console.error("Error al actualizar la notificación:", error);
     res.status(500).json({ error: "Error al actualizar la notificación" });
+  }
+});
+
+app.put("/update-token", async (req, res) => {
+  const { userId, token } = req.body;
+  console.log("Actualizando token:", req.body);
+
+  if (!userId || !token) {
+    return res.status(400).json({ error: "El userId y el token son requeridos" });
+  }
+
+  try {
+    // Actualiza el token de notificación del usuario
+    await updateUserToken(userId, token);
+    res.json({ success: true, message: "Token actualizado correctamente" });
+  } catch (error) {
+    console.error("Error actualizando el token:", error);
+    res.status(500).json({ error: "Error actualizando el token" });
   }
 });
 

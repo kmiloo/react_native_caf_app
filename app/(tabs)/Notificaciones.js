@@ -52,11 +52,26 @@ export default function Notificaciones() {
           projectId: "e6131196-2a80-4089-bff4-9d0fd7651d97",
         })
       ).data;
-      console.log("Token de dispositivo:", token);
+      //console.log("Token de dispositivo:", token);
+      await AsyncStorage.setItem("notificationToken", token);
     } catch (error) {
-      console.error("Error al obtener el token:", error);
+      console.error("Error al obtener el tokennn:", error);
     }
-
+      
+      try {
+        const usertoken = await AsyncStorage.getItem("userToken");
+        const token = await AsyncStorage.getItem("notificationToken");
+        const decodedToken = jwtDecode(usertoken);
+        const userId = decodedToken.id;
+        const response = await axios.put(
+          `http://192.168.1.14:8080/update-token`
+          , { token: token, userId: userId }
+        );
+        console.log("Respuesta de actualización de tokenaa:", response.data);
+      } catch (error) {
+        console.error("Error al actualizar el tokenaaaaasas:", error);
+      }
+      
     // Configura los listeners para notificaciones
     const notificationListener = Notifications.addNotificationReceivedListener(
       (notification) => {
@@ -87,7 +102,7 @@ export default function Notificaciones() {
       const decodedToken = jwtDecode(token);
       const userId = decodedToken.id;
       const response = await axios.get(
-        `http://192.168.1.11:8080/notifications?userId=${userId}`,
+        `http://192.168.1.14:8080/notifications?userId=${userId}`,
       );
       setNotificaciones(response.data);
     } catch (error) {

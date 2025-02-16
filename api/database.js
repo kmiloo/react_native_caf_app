@@ -31,6 +31,12 @@ export async function updateLastLogin(userId) {
   await pool.query(query, [userId]);
 }
 
+//agregar token a usuario
+export async function updateUserToken(userId, token) {
+  const query = "UPDATE sesiones_login SET token_notification = ? WHERE id = ?";
+  await pool.query(query, [token, userId]);
+}
+
 //registro de usuario
 export async function registerUser(
   nombre,
