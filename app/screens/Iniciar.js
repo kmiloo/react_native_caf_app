@@ -87,9 +87,10 @@ export default function Iniciar() {
 
         {/* Campo de correo electrónico */}
         <TextInput
-          className="border-b-2 border-gray-400 w-64 py-2 mb-1"
+          className="border-b-2 border-gray-400 w-64 py-2 mb-3"
           placeholder="Correo electrónico"
           value={email}
+          maxLength={50}
           onChangeText={(text) => {
             setEmail(text);
             setErrorEmail("");
@@ -101,10 +102,11 @@ export default function Iniciar() {
 
         {/* Campo de contraseña */}
         <TextInput
-          className="border-b-2 border-gray-400 w-64 py-2 mb-1"
+          className="border-b-2 border-gray-400 w-64 py-2 mb-3"
           placeholder="Contraseña"
           secureTextEntry
           value={password}
+          maxLength={50}
           onChangeText={(text) => {
             setPassword(text);
             setErrorPassword("");

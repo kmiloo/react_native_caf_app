@@ -143,14 +143,14 @@ app.post("/login", async (req, res) => {
 // Ruta para registrar un usuario
 app.post("/register", async (req, res) => {
   console.log("elLLLLLLLLLLLLLLLLLLLL: ", req.body);
-  const { nombre, apellido, correo, contrasena_hash } = req.body;
+  const { nombre, apellido, rut, correo, contrasena_hash } = req.body;
 
   try {
     // Hashea la contraseña antes de almacenarla
     const contrasena = await bcrypt.hash(contrasena_hash, 10); // 10 es el costo del hashing
 
     // Registra al usuario en la base de datos
-    await registerUser(nombre, apellido, correo, contrasena);
+    await registerUser(nombre, apellido, rut, correo, contrasena);
 
     res.json({ success: true, message: "Usuario registrado exitosamente" });
   } catch (error) {

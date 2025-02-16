@@ -32,14 +32,21 @@ export async function updateLastLogin(userId) {
 }
 
 //registro de usuario
-export async function registerUser(nombre, apellido, correo, contrasena_hash) {
+export async function registerUser(
+  nombre,
+  apellido,
+  rut,
+  correo,
+  contrasena_hash,
+) {
   const query = `
-    INSERT INTO sesiones_login (nombre, apellido, correo, contrasena_hash)
-    VALUES (?, ?, ?, ?)
+    INSERT INTO sesiones_login (nombre, apellido, rut, correo, contrasena_hash)
+    VALUES (?, ?, ?, ?, ?)
   `;
   const [result] = await pool.query(query, [
     nombre,
     apellido,
+    rut,
     correo,
     contrasena_hash,
   ]);

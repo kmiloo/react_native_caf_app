@@ -8,6 +8,7 @@ export function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
   const [loginError, setLoginError] = useState(null);
+  const [registerError, setRegisterError] = useState(null); // Nuevo estado para errores de registro
 
   const login = async (correo, contrasena) => {
     setLoginError(null);
@@ -16,55 +17,55 @@ export function AuthProvider({ children }) {
         correo,
         contrasena,
       });
-      console.log("Respuesta del backend:", response.data);
 
       if (response.data.success) {
         const token = response.data.token;
         setUserToken(token);
         setIsLoading(false);
-        await AsyncStorage.setItem("userToken", token); // Guarda el token en AsyncStorage
-        //console.log("Token guardado:", token);
+        await AsyncStorage.setItem("userToken", token);
       } else {
         setLoginError("Credenciales inválidas");
-        //console.log("Credenciales inválidas");
       }
     } catch (error) {
-      //console.error("Error en el login:", error);
-      setLoginError("Error al iniciar sesion. Inténtalo de nuevo.");
+      //console.error("El eror es: ", error.status);
+      if (error.status === 401) {
+        setLoginError("Credenciales inválidas");
+        return;
+      }
+      setLoginError("Error al iniciar sesión. Inténtalo de nuevo.");
     }
   };
 
-  const register = async (nombre, apellido, correo, contrasena_hash) => {
+  const register = async (nombre, apellido, rut, correo, contrasena_hash) => {
+    setRegisterError(null); // Limpiar el error de registro
     try {
       const response = await axios.post("http://192.168.1.11:8080/register", {
         nombre,
         apellido,
+        rut,
         correo,
         contrasena_hash,
       });
-      //console.log("Respuesta del backend:", response.data);
 
       if (response.data.success) {
-        /*const token = response.data.token;
-        setUserToken(token);
-        setIsLoading(false);
-        await AsyncStorage.setItem("userToken", token); // Guarda el token en AsyncStorage
-        console.log("Token guardado:", token);*/
+        // Registro exitoso
+        console.log("Registro exitoso:", response.data);
       } else {
-        console.log("Credenciales inválidas");
+        // Error en el registro
+        setRegisterError("Error al registrarse. Inténtalo de nuevo.");
       }
     } catch (error) {
-      console.error("Error en el registro:", error);
+      //console.error("Error en el registro:", error);
+      setRegisterError("Error al registrarse. Inténtalo de nuevo.");
     }
   };
 
   const logout = () => {
     setUserToken(null);
     setIsLoading(false);
-    AsyncStorage.removeItem("userToken"); // Elimina el token de AsyncStorage
+    AsyncStorage.removeItem("userToken");
   };
 
-  // Verifica si el usuario ya tiene un token al cargar la aplicación
   useEffect(() => {
     const checkToken = async () => {
       const token = await AsyncStorage.getItem("userToken");
@@ -86,7 +87,9 @@ export function AuthProvider({ children }) {
         logout,
         register,
         loginError,
+        registerError, // Pasar el error de registro al contexto
         clearLoginError: () => setLoginError(null),
+        clearRegisterError: () => setRegisterError(null), // Limpiar el error de registro
       }}
     >
       {children}
