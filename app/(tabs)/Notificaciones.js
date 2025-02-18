@@ -57,21 +57,21 @@ export default function Notificaciones() {
     } catch (error) {
       console.error("Error al obtener el tokennn:", error);
     }
-      
-      try {
-        const usertoken = await AsyncStorage.getItem("userToken");
-        const token = await AsyncStorage.getItem("notificationToken");
-        const decodedToken = jwtDecode(usertoken);
-        const userId = decodedToken.id;
-        const response = await axios.put(
-          `http://192.168.1.14:8080/update-token`
-          , { token: token, userId: userId }
-        );
-        console.log("Respuesta de actualización de tokenaa:", response.data);
-      } catch (error) {
-        console.error("Error al actualizar el tokenaaaaasas:", error);
-      }
-      
+
+    try {
+      const usertoken = await AsyncStorage.getItem("userToken");
+      const token = await AsyncStorage.getItem("notificationToken");
+      const decodedToken = jwtDecode(usertoken);
+      const userId = decodedToken.id;
+      const response = await axios.put(
+        `http://192.168.1.11:8080/update-token`,
+        { token: token, userId: userId },
+      );
+      console.log("Respuesta de actualización de tokenaa:", response.data);
+    } catch (error) {
+      console.error("Error al actualizar el tokenaaaaasas:", error);
+    }
+
     // Configura los listeners para notificaciones
     const notificationListener = Notifications.addNotificationReceivedListener(
       (notification) => {
@@ -102,9 +102,10 @@ export default function Notificaciones() {
       const decodedToken = jwtDecode(token);
       const userId = decodedToken.id;
       const response = await axios.get(
-        `http://192.168.1.14:8080/notifications?userId=${userId}`,
+        `http://192.168.1.11:8080/notifications?userId=${userId}`,
       );
-      setNotificaciones(response.data);
+      const ultimasNotificaciones = response.data.slice(-10);
+      setNotificaciones(ultimasNotificaciones);
     } catch (error) {
       console.error("Error obteniendo notificaciones:", error);
     } finally {
@@ -174,16 +175,24 @@ export default function Notificaciones() {
       <CustomHeader />
       <Image source={logo} className="w-40 h-8 mb-12" resizeMode="contain" />
       <ScrollView>
-        {notificaciones.map((notificacion, index) => (
-          <NotificationItem
-            key={index}
-            image={logo}
-            title={notificacion.titulo}
-            text={notificacion.descripcion}
-            status={notificacion.estado}
-            onPress={() => handleNotificationPress(notificacion)}
-          />
-        ))}
+        {notificaciones.length === 0 ? (
+          <View className="flex-1 justify-center items-center h-12">
+            <Text className="text-gray-500 text-lg">
+              Aun no tienes notificaciones
+            </Text>
+          </View>
+        ) : (
+          notificaciones.map((notificacion, index) => (
+            <NotificationItem
+              key={index}
+              image={logo}
+              title={notificacion.titulo}
+              text={notificacion.descripcion}
+              status={notificacion.estado}
+              onPress={() => handleNotificationPress(notificacion)}
+            />
+          ))
+        )}
       </ScrollView>
 
       {/* Modal para mostrar detalles de la notificación */}

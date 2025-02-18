@@ -211,7 +211,9 @@ app.put("/update-token", async (req, res) => {
   console.log("Actualizando token:", req.body);
 
   if (!userId || !token) {
-    return res.status(400).json({ error: "El userId y el token son requeridos" });
+    return res
+      .status(400)
+      .json({ error: "El userId y el token son requeridos" });
   }
 
   try {

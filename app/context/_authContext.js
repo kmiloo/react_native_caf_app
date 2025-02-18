@@ -13,7 +13,7 @@ export function AuthProvider({ children }) {
   const login = async (correo, contrasena) => {
     setLoginError(null);
     try {
-      const response = await axios.post("http://192.168.1.14:8080/login", {
+      const response = await axios.post("http://192.168.1.11:8080/login", {
         correo,
         contrasena,
       });
@@ -39,7 +39,7 @@ export function AuthProvider({ children }) {
   const register = async (nombre, apellido, rut, correo, contrasena_hash) => {
     setRegisterError(null); // Limpiar el error de registro
     try {
-      const response = await axios.post("http://192.168.1.14:8080/register", {
+      const response = await axios.post("http://192.168.1.11:8080/register", {
         nombre,
         apellido,
         rut,
