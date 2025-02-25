@@ -1,16 +1,31 @@
-import React, { useState } from "react";
-import { View, Text, Switch, TouchableOpacity, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Linking,
+} from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { CustomHeader } from "../../components/CustomHeader";
 import { useRouter, Link } from "expo-router";
 
 export default function MenuScreen() {
-  const [darkMode, setDarkMode] = useState(false);
-  const router = useRouter();
+  const openInstagram = () => {
+    Linking.openURL("https://www.instagram.com/piscina_ulagos").catch((err) =>
+      console.error("Error al abrir Instagram:", err),
+    );
+  };
+
+  const openFacebook = () => {
+    Linking.openURL("https://www.facebook.com/CafChinquihue").catch((err) =>
+      console.error("Error al abrir Facebook:", err),
+    );
+  };
 
   return (
     <View className="h-full ">
-      <CustomHeader />
+      <CustomHeader profileRoute="/Perfil" />
       <ScrollView className="p-4">
         <Text className="text-lg font-bold mb-4">Menú</Text>
         {/* Configuraciones */}
@@ -45,7 +60,7 @@ export default function MenuScreen() {
             />
           </View>*/}
 
-          <TouchableOpacity
+          {/*<TouchableOpacity
             className="flex-row items-center py-2"
             onPress={() => console.log("Sugerencias clicked")}
           >
@@ -67,7 +82,7 @@ export default function MenuScreen() {
               className="mr-3 text-gray-600"
             />
             <Text className="text-gray-800">Reportar problema</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>*/}
         </View>
         {/* Redes sociales */}
         <View className="bg-white rounded-xl shadow p-4">
@@ -75,7 +90,10 @@ export default function MenuScreen() {
             Redes sociales
           </Text>
 
-          <TouchableOpacity className="flex-row items-center py-2">
+          <TouchableOpacity
+            className="flex-row items-center py-2"
+            onPress={openInstagram} // Usar la función para Instagram
+          >
             <FontAwesome
               name="instagram"
               size={20}
@@ -84,7 +102,10 @@ export default function MenuScreen() {
             <Text className="text-gray-800">Instagram</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity className="flex-row items-center py-2">
+          <TouchableOpacity
+            className="flex-row items-center py-2"
+            onPress={openFacebook} // Usar la función para Facebook
+          >
             <FontAwesome
               name="facebook"
               size={20}
@@ -93,14 +114,14 @@ export default function MenuScreen() {
             <Text className="text-gray-800">Facebook</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity className="flex-row items-center py-2">
+          {/*<TouchableOpacity className="flex-row items-center py-2">
             <FontAwesome
               name="twitter"
               size={20}
               className="mr-3 text-gray-600"
             />
             <Text className="text-gray-800">Twitter</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>*/}
         </View>
       </ScrollView>
     </View>

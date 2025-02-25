@@ -9,6 +9,7 @@ import {
   getLastFitnessEvaluation,
   getRoutinesByProfileId,
   updateUserToken,
+  getActividadBloque,
 } from "./database.js";
 import { generateToken, verifyToken } from "./auth.js";
 import express from "express";
@@ -117,10 +118,18 @@ app.post("/login", async (req, res) => {
         // Actualiza la fecha y hora del último inicio de sesión
         console.log("elLLLLLLLLLLLLLLLLLLLL: ", user.id);
         await updateLastLogin(user.id);
+        console.log("elLl usuario: ", user);
 
         // Genera un token JWT
         const token = jwt.sign(
-          { id: user.id, correo: user.correo },
+          {
+            id: user.id,
+            correo: user.correo,
+            rut: user.rut,
+            nombre: user.nombre,
+            apellido: user.apellido,
+            creado_en: user.creado_en,
+          },
           SECRET_KEY,
           { expiresIn: "1h" },
         );
@@ -269,15 +278,28 @@ app.get("/rutinas", async (req, res) => {
 
   try {
     const rutinas = await getRoutinesByProfileId(perfilFitnessId);
-    /*const [rutinas] = await pool.query(
-      "SELECT * FROM rutinas WHERE perfil_fitness_id = ?",
-      [perfilFitnessId],
-    );*/
     console.log("Rutinas:", rutinas);
     res.json(rutinas);
   } catch (error) {
     console.error("Error obteniendo rutinas:", error);
     res.status(500).json({ error: "Error obteniendo rutinas" });
+  }
+});
+
+app.get("/actividadbloque", async (req, res) => {
+  const { rut } = req.query;
+
+  if (!rut) {
+    return res.status(400).json({ error: "El rut es requerido" });
+  }
+
+  try {
+    const actividad = await getActividadBloque(rut);
+    console.log("Actividad bloque:", actividad);
+    res.json(actividad);
+  } catch (error) {
+    console.error("Error obteniendo actividad:", error);
+    res.status(500).json({ error: "Error obteniendo actividad" });
   }
 });
 

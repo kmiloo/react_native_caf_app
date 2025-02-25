@@ -172,7 +172,7 @@ export default function Notificaciones() {
 
   return (
     <View className="h-full">
-      <CustomHeader />
+      <CustomHeader profileRoute="/Perfil" />
       <Image source={logo} className="w-40 h-8 mb-12" resizeMode="contain" />
       <ScrollView>
         {notificaciones.length === 0 ? (

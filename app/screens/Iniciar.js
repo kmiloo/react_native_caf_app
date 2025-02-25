@@ -19,23 +19,6 @@ export default function Iniciar() {
   const [test, setTest] = useState([]);
   const { login, loginError, clearLoginError } = useContext(AuthContext); // Obtener loginError y clearLoginError del contexto
 
-  /*useEffect(() => {
-    fetchData();
-  }, []);
-
-  async function fetchData() {
-    try {
-      const response = await fetch("http://192.168.1.11:8080/user/4");
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status} ${response.statusText}`);
-      }
-      const data = await response.json();
-      setTest(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  }*/
-
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
@@ -75,6 +58,7 @@ export default function Iniciar() {
           resizeMode="contain"
         />
       </View>
+
       <Image
         source={require("../../assets/ulagos.png")}
         className="h-14"

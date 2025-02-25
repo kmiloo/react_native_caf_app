@@ -1,10 +1,6 @@
-import React, { useState } from "react";
-import {
-  Calendar,
-  CalendarList,
-  Agenda,
-  LocaleConfig,
-} from "react-native-calendars";
+import React from "react";
+import { Calendar } from "react-native-calendars";
+import { LocaleConfig } from "react-native-calendars";
 
 // Configuración de idioma en español
 LocaleConfig.locales["es"] = {
@@ -51,15 +47,13 @@ LocaleConfig.locales["es"] = {
 
 LocaleConfig.defaultLocale = "es";
 
-export default function Customcalendar() {
-  const [selected, setSelected] = useState("");
-
+export default function CustomCalendar({ markedDates }) {
   return (
     <Calendar
       style={{
         borderWidth: 1,
         borderColor: "blue",
-        height: 350,
+
         width: 300,
         borderRadius: 10,
         marginTop: 10,
@@ -68,11 +62,7 @@ export default function Customcalendar() {
         shadowOpacity: 0.8,
         shadowRadius: 1,
         elevation: 5,
-        alignSelf: "center", // Center the calendar to avoid resizing
-      }}
-      onDayPress={(day) => {
-        console.log("selected day", day);
-        setSelected(day.dateString);
+        alignSelf: "center",
       }}
       monthFormat={"MMMM yyyy"}
       hideExtraDays={true}
@@ -101,15 +91,8 @@ export default function Customcalendar() {
         textMonthFontSize: 16,
         textDayHeaderFontSize: 16,
       }}
-      markingType={"custom"}
-      markedDates={{
-        [selected]: {
-          selected: true,
-          disableTouchEvent: true,
-          selectedColor: "orange",
-          selectedTextColor: "red",
-        },
-      }}
+      markingType={"dot"} // Usar multi-dot para mostrar puntos
+      markedDates={markedDates} // Pasar las fechas marcadas
     />
   );
 }

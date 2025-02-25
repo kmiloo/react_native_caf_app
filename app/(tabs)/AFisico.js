@@ -68,7 +68,7 @@ export default function AFisico() {
   return (
     <View className="h-full">
       <ScrollView className="">
-        <CustomHeader />
+        <CustomHeader profileRoute="/Perfil" />
         <Image source={logo} className="w-40 h-8 " resizeMode="contain" />
         <View className=" items-center mt-8">
           <Text className="text-lg font-bold mb-4">
@@ -77,50 +77,137 @@ export default function AFisico() {
         </View>
         <View className="gap-4 flex-wrap flex-row justify-center p-4 ">
           {/*<AFisicoItem title="Edad" value={perfilFitness?.edad} />*/}
-          <AFisicoItem title="Peso" value={evaluacion?.peso} />
-          <AFisicoItem title="Estatura" value={perfilFitness?.estatura} />
-          <AFisicoItem title="Fuma" value={perfilFitness?.fuma ? "Sí" : "No"} />
-          <AFisicoItem title="Masa grasa" value={evaluacion?.grasa_visceral} />
+          <AFisicoItem
+            title="Peso"
+            value={
+              evaluacion?.peso ? parseFloat(evaluacion.peso).toFixed(2) : "N/A"
+            }
+          />
+          <AFisicoItem
+            title="Estatura"
+            value={
+              perfilFitness?.estatura
+                ? parseFloat(perfilFitness.estatura).toFixed(2)
+                : "N/A"
+            }
+          />
+          <AFisicoItem
+            title="Masa grasa"
+            value={
+              evaluacion?.grasa_visceral
+                ? parseFloat(evaluacion.grasa_visceral).toFixed(2)
+                : "N/A"
+            }
+          />
           <AFisicoItem
             title="Grasa visceral"
-            value={evaluacion?.grasa_visceral}
+            value={
+              evaluacion?.grasa_visceral
+                ? parseFloat(evaluacion.grasa_visceral).toFixed(2)
+                : "N/A"
+            }
           />
-          <AFisicoItem title="Masa muscular" value={evaluacion?.musculo} />
+          <AFisicoItem
+            title="Masa muscular"
+            value={
+              evaluacion?.musculo
+                ? parseFloat(evaluacion.musculo).toFixed(2)
+                : "N/A"
+            }
+          />
           <AFisicoItem
             title="pliegue bicipital"
-            value={evaluacion?.pliegue_bicipital}
+            value={
+              evaluacion?.pliegue_bicipital
+                ? parseFloat(evaluacion.pliegue_bicipital).toFixed(2)
+                : "N/A"
+            }
           />
           <AFisicoItem
             title="pliegue subescapular"
-            value={evaluacion?.pliegue_subescapular}
+            value={
+              evaluacion?.pliegue_subescapular
+                ? parseFloat(evaluacion.pliegue_subescapular).toFixed(2)
+                : "N/A"
+            }
           />
           <AFisicoItem
             title="pliegue tricipital"
-            value={evaluacion?.pliegue_tricipital}
+            value={
+              evaluacion?.pliegue_tricipital
+                ? parseFloat(evaluacion.pliegue_tricipital).toFixed(2)
+                : "N/A"
+            }
           />
           <AFisicoItem
             title="pliegue suprailiaco"
-            value={evaluacion?.pliegue_suprailiaco}
+            value={
+              evaluacion?.pliegue_suprailiaco
+                ? parseFloat(evaluacion.pliegue_suprailiaco).toFixed(2)
+                : "N/A"
+            }
           />
-          <AFisicoItem title="press pecho" value={evaluacion?.press_pecho} />
-          <AFisicoItem title="press hombro" value={evaluacion?.press_hombro} />
-          <AFisicoItem title="Remo" value={evaluacion?.remo} />
+          <AFisicoItem
+            title="press pecho"
+            value={
+              evaluacion?.press_pecho
+                ? parseFloat(evaluacion.press_pecho).toFixed(2)
+                : "N/A"
+            }
+          />
+          <AFisicoItem
+            title="press hombro"
+            value={
+              evaluacion?.press_hombro
+                ? parseFloat(evaluacion.press_hombro).toFixed(2)
+                : "N/A"
+            }
+          />
+          <AFisicoItem
+            title="Remo"
+            value={
+              evaluacion?.remo ? parseFloat(evaluacion.remo).toFixed(2) : "N/A"
+            }
+          />
           <AFisicoItem
             title="Sentadilla Cuadriceps"
-            value={evaluacion?.sentadilla_cuadriceps}
+            value={
+              evaluacion?.sentadilla_cuadriceps
+                ? parseFloat(evaluacion.sentadilla_cuadriceps).toFixed(2)
+                : "N/A"
+            }
           />
           <AFisicoItem
             title="Izquiotibiales"
-            value={evaluacion?.izquiotibiales}
+            value={
+              evaluacion?.izquiotibiales
+                ? parseFloat(evaluacion.izquiotibiales).toFixed(2)
+                : "N/A"
+            }
           />
-          <AFisicoItem title="VO2 Máximo" value={evaluacion?.vo2_maximo} />
+          <AFisicoItem
+            title="VO2 Máximo"
+            value={
+              evaluacion?.vo2_maximo
+                ? parseFloat(evaluacion.vo2_maximo).toFixed(2)
+                : "N/A"
+            }
+          />
           <AFisicoItem
             title="Pasos Logrados"
-            value={evaluacion?.pasos_logrados}
+            value={
+              evaluacion?.pasos_logrados
+                ? parseFloat(evaluacion.pasos_logrados).toFixed(2)
+                : "N/A"
+            }
           />
           <AFisicoItem
             title="Cantidad Silla"
-            value={evaluacion?.cantidad_silla}
+            value={
+              evaluacion?.cantidad_silla
+                ? parseFloat(evaluacion.cantidad_silla).toFixed(2)
+                : "N/A"
+            }
           />
         </View>
 
@@ -229,7 +316,7 @@ export default function AFisico() {
                     Peso
                   </Text>
                   <Text className="mt-2 text-sm font-medium text-center">
-                    {rutina.peso} kg
+                    {parseFloat(rutina.peso).toFixed(2)} kg
                   </Text>
                 </View>
 
@@ -255,7 +342,7 @@ export default function AFisico() {
                     Series
                   </Text>
                   <Text className="mt-2 text-sm font-medium text-center">
-                    {rutina.series}
+                    {parseFloat(rutina.series).toFixed(2)}
                   </Text>
                 </View>
 
@@ -266,7 +353,7 @@ export default function AFisico() {
                     Descanso
                   </Text>
                   <Text className="mt-2 text-sm font-medium text-center">
-                    {rutina.descanso} min
+                    {parseFloat(rutina.descanso).toFixed(2)} min
                   </Text>
                 </View>
               </View>
